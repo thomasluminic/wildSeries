@@ -1,8 +1,9 @@
-@import "~bootstrap/scss/bootstrap";
 $theme-colors: (
         "primary": #e40404,
         "secondary": #ffffff,
 );
+@import "~bootstrap/scss/bootstrap";
+
 body {
     background-color: lightgray;
 }
