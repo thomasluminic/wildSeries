@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Program;
 use App\Entity\Category;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +19,7 @@ class WildController extends AbstractController
     /**
      * Show all rows from Program’s entity
      *
-     * @Route("/program", name="program")
+     * @Route("/program", name="index")
      * @return Response A response instance
      */
     public function index(): Response
@@ -94,6 +95,41 @@ class WildController extends AbstractController
         return $this->render('Category/showByCategory.html.twig', [
             'category' => $category,
             'programs' => $programs,
+        ]);
+    }
+    /**
+     * Getting a program
+     *
+     * @param int $programId
+     * @Route("/program/{programId<^[0-9]+$>}", name="program")
+     * @return Response
+     */
+    public function showByProgram($programId): Response
+    {
+        $program = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->find($programId);
+        dump($program);
+        return $this->render('Program/showByProgram.html.twig', [
+            'program' => $program,
+        ]);
+    }
+
+    /**
+     * Getting a season
+     *
+     * @param int $seasonId
+     * @Route("/program/season/{seasonId<^[0-9]+$>}", name="season")
+     * @return Response
+     */
+    public function showBySeason(int $seasonId): Response
+    {
+        $season = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->find($seasonId);
+        dump($season);
+        return $this->render('Season/show.html.twig', [
+            'season' => $season,
         ]);
     }
 }
