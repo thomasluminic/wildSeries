@@ -7,7 +7,9 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
+use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,7 +35,6 @@ class WildController extends AbstractController
                 'No program found in program\'s table.'
             );
         }
-
         return $this->render('Program/all.html.twig', [
             'programs' => $programs,
         ]);
@@ -130,6 +131,34 @@ class WildController extends AbstractController
         dump($season);
         return $this->render('Season/show.html.twig', [
             'season' => $season,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @Route ("/add/category", name="cateogry_add")
+     * @return Response
+     */
+    public function addCategory(Request $request): Response
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        $message = '';
+        if ($form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $entityManager->persist($data);
+            $entityManager->flush();
+            $message = 'Your category is added ! Well play';
+        }
+        $allCategory = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+        return $this->render('Category/add.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message,
+            'categories' => $allCategory,
         ]);
     }
 }
