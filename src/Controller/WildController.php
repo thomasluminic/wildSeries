@@ -159,11 +159,13 @@ class WildController extends AbstractController
             'form' => $form->createView(),
             'message' => $message,
             'categories' => $allCategory,
-          ]);
+        ]);
     }
-  
+
+    /**
      * @param Episode $episode
      * @Route ("/episode/{id}", name="episode")
+     * @return Response
      */
     public function showEpisode(Episode $episode): Response
     {
