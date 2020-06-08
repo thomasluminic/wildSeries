@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1><a href="{{ path('wild_program', {programId: program.id}) }}">{{ program.title }}</a> - <a href="{{ path('wild_season', {seasonId: season.id}) }}">Season {{ season.number }}</a></h1>
+    <h2>{{ episode.number }} - {{ episode.title }}</h2>
+    <p>{{ episode.synopsis }}</p>
+{% endblock %}
