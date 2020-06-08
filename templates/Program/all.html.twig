@@ -3,15 +3,27 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
+    <h1>Nos séries :</h1>
+    <div class="row d-flex justify-content-center">
     {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / <a href="{{ path('wild_program', {programId: program.id}) }}">{{ program.title }}</a> - Catégorie : <a href="{{ path('wild_category', {categoryName: program.category.name |lower }) }}">{{ program.category.name }}</a></h2>
-            <p>{{ program.summary }}</p>
+        <div class="card col-4 m-1">
+            <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}">
+            <div class="card-body">
+                <h2 class="card-title">
+                    <a href="{{ path('wild_program', {programId: program.id}) }}">
+                        {{ program.title }}
+                    </a>
+                    /
+                    Catégorie : <a href="{{ path('wild_category', {categoryName: program.category.name |lower }) }}">
+                        {{ program.category.name }}
+                    </a>
+                </h2>
+            </div>
         </div>
     {% else %}
         Aucune série trouvée.
     {% endfor %}
+    </div>
     <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
