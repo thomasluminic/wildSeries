@@ -1,4 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Bienvenue</h1>
+    <div class="container-fluid">
+        <h2 class="text-center text-primary">Nos dernières séries</h2>
+        <div class="row d-flex justify-content-center">
+            {% for program in programs %}
+                {% include 'Program/_components/_card.html.twig' %}
+            {% else %}
+                Aucune série trouvée.
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
