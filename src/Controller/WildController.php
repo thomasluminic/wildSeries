@@ -157,7 +157,7 @@ class WildController extends AbstractController
             'form' => $form->createView(),
             'message' => $message,
             'categories' => $allCategory,
-          ]);
+        ]);
     }
 
     /**
