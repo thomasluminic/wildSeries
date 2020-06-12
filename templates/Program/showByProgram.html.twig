@@ -5,11 +5,11 @@
 {% block body %}
     <h1>Toutes les séries de la table program : </h1>
         <div>
-            <h2> {{ program.title }} - Catégorie : <a href="{{ path('wild_category', {categoryName: program.category.name |lower }) }}">{{ program.category.name }}</a></h2>
+            <h2> {{ program.title }} - Catégorie : <a href="{{ path('category', {categoryName: program.category.name |lower }) }}">{{ program.category.name }}</a></h2>
             <p>{{ program.summary }}</p>
         </div>
     {% for season in program.seasons %}
-        <h1><a href="{{ path('wild_season', {seasonId: season.id}) }}">Season {{ season.number }}</a> / {{ season.year }}</h1>
+        <h1><a href="{{ path('season', {seasonId: season.id}) }}">Season {{ season.number }}</a> / {{ season.year }}</h1>
         <p>{{ season.description }}</p>
     {% endfor %}
     <a href="{{ path('app_index') }}">

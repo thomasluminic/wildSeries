@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/wild", name="wild_")
- */
+
 class WildController extends AbstractController
 {
     /**
@@ -111,8 +109,8 @@ class WildController extends AbstractController
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->find($programId);
-        dump($program);
-        return $this->render('Program/showByProgram.html.twig', [
+        dump($program->getActors());
+        return $this->render('Program/show.html.twig', [
             'program' => $program,
         ]);
     }

@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ slug }}{% endblock %}
+{% block title %}{{ program.title }}{% endblock %}
 {% block body %}
     <div class="media">
         <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
         <div class="media-body">
-            <h1 class="mt-0">{{ program.title }}</h1>
-            <p>{{ program.summary }}</p>
-            <p>Categorie : {{ program.category.name }}</p>
+            <h1 class="mt-0 text-primary">{{ program.title }}</h1>
+            <p class="text-secondary">{{ program.summary }}</p>
+            <p class="text-secondary">Categorie : {{ program.category.name }}</p>
         </div>
     </div>
-
-    <a href="{{ path('wild_index') }}">
+    <h2 class="text-primary">Acteur :</h2>
+    <ul>
+        {% for actor in program.actors %}
+            <a href="/actor/{{ actor.id }}" class="text-secondary">{{ actor.name }} </a>
+        {% else %}
+            <li>Aucun acteur pour cette série</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('index') }}">
         Retour au programme
     </a>
 {% endblock %}
