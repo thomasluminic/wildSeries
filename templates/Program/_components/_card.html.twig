@@ -1,0 +1,17 @@
+<div class="card col-3 m-1">
+    <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }}">
+    <div class="card-body">
+        <h2 class="card-title">
+            <p>
+                <a href="{{ path('program', {programId: program.id}) }}">
+                    {{ program.title }}
+                </a>
+            </p>
+            <p>
+                <a href="{{ path('category', {categoryName: program.category.name |lower }) }}">
+                    {{ program.category.name }}
+                </a>
+            </p>
+        </h2>
+    </div>
+</div>

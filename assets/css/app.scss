@@ -1,9 +1,22 @@
 $theme-colors: (
         "primary": #e40404,
         "secondary": #ffffff,
+        "tertiary" : #000000,
 );
 @import "~bootstrap/scss/bootstrap";
-
+@font-face {
+    font-family: 'Metal Mania';
+    font-style: normal;
+    font-weight: normal;
+    src: local('MetalMania'), local('Metal Mania'),
+    url('../font/MetalMania-Regular.ttf') format('truetype');
+}
 body {
-    background-color: lightgray;
+    background-color: #000000;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Metal Mania", serif;
+}
+.text-primary {
+    font-size: 50px;
 }
