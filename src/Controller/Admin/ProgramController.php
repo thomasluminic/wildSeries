@@ -5,11 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use App\Service\MailerService;
 use App\Service\SlugifyService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/admin/program")
@@ -28,10 +31,12 @@ class ProgramController extends AbstractController
             'programs' => $programs,
         ]);
     }
+
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function new(Request $request, SlugifyService $slugify): Response
+    public function new(Request $request, SlugifyService $slugify, MailerService $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -43,7 +48,7 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
-
+            $mailer->createMail($program);
             return $this->redirectToRoute('program_index');
         }
 
