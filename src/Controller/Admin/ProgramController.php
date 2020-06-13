@@ -24,7 +24,7 @@ class ProgramController extends AbstractController
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findAll();
-        return $this->render('program/index.html.twig', [
+        return $this->render('Admin/program/index.html.twig', [
             'programs' => $programs,
         ]);
     }
@@ -47,7 +47,7 @@ class ProgramController extends AbstractController
             return $this->redirectToRoute('program_index');
         }
 
-        return $this->render('program/new.html.twig', [
+        return $this->render('Admin/program/new.html.twig', [
             'program' => $program,
             'form' => $form->createView(),
         ]);
@@ -83,7 +83,7 @@ class ProgramController extends AbstractController
             return $this->redirectToRoute('program_index');
         }
 
-        return $this->render('program/edit.html.twig', [
+        return $this->render('Admin/program/edit.html.twig', [
             'program' => $program,
             'form' => $form->createView(),
         ]);
