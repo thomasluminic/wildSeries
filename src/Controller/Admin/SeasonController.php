@@ -20,7 +20,7 @@ class SeasonController extends AbstractController
      */
     public function index(SeasonRepository $seasonRepository): Response
     {
-        return $this->render('season/index.html.twig', [
+        return $this->render('Admin/season/index.html.twig', [
             'seasons' => $seasonRepository->findAll(),
         ]);
     }
