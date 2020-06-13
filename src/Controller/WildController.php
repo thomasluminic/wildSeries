@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
 use App\Form\CategoryType;
+use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -158,20 +160,36 @@ class WildController extends AbstractController
 
     /**
      * @param string $slug
-     * @Route ("/episode/{slug}", name="episode")
+     * @param Request $request
      * @return Response
+     * @Route ("/episode/{slug}", name="episode")
      */
-    public function showEpisode(string $slug): Response
+    public function showEpisode(string $slug, Request $request): Response
     {
         $episode = $this->getDoctrine()
             ->getRepository(Episode::class)
             ->findOneBy(['slug' => $slug]);
         $season = $episode->getSeason();
         $program = $season->getProgram();
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $data->setAuthor($this->getUser());
+            $data->setEpisode($episode);
+            $entityManager->persist($data);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('episode', ['slug' => $episode->getSlug()]);
+        }
         return $this->render('Episode/show.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            'form' => $form->createView(),
         ]);
     }
 }
