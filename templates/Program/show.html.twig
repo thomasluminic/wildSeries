@@ -12,11 +12,15 @@
     <h2 class="text-primary">Acteur :</h2>
     <ul>
         {% for actor in program.actors %}
-            <a href="/actor/{{ actor.id }}" class="text-secondary">{{ actor.name }} </a>
+            <a href="/actor/{{ actor.slug }}" class="text-secondary">{{ actor.name }} </a>
         {% else %}
             <li>Aucun acteur pour cette série</li>
         {% endfor %}
     </ul>
+    {% for season in program.seasons %}
+        <h1><a href="{{ path('season', {seasonId: season.id}) }}">Season {{ season.number }}</a> / {{ season.year }}</h1>
+        <p>{{ season.description }}</p>
+    {% endfor %}
     <a href="{{ path('index') }}">
         Retour au programme
     </a>

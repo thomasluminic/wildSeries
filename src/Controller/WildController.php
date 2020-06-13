@@ -100,16 +100,15 @@ class WildController extends AbstractController
     /**
      * Getting a program
      *
-     * @param int $programId
-     * @Route("/program/{programId<^[0-9]+$>}", name="program")
+     * @param string $programSlug
+     * @Route("/program/{programSlug<[a-z-]+>}", name="program")
      * @return Response
      */
-    public function showByProgram($programId): Response
+    public function showByProgram($programSlug): Response
     {
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
-            ->find($programId);
-        dump($program->getActors());
+            ->findoneBy(['slug' => $programSlug]);
         return $this->render('Program/show.html.twig', [
             'program' => $program,
         ]);
@@ -161,12 +160,15 @@ class WildController extends AbstractController
     }
 
     /**
-     * @param Episode $episode
-     * @Route ("/episode/{id}", name="episode")
+     * @param string $slug
+     * @Route ("/episode/{slug}", name="episode")
      * @return Response
      */
-    public function showEpisode(Episode $episode): Response
+    public function showEpisode(string $slug): Response
     {
+        $episode = $this->getDoctrine()
+            ->getRepository(Episode::class)
+            ->findOneBy(['slug' => $slug]);
         $season = $episode->getSeason();
         $program = $season->getProgram();
         return $this->render('Episode/show.html.twig', [
