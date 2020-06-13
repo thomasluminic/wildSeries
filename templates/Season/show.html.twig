@@ -5,7 +5,7 @@
     {% for episode in season.episodes %}
     <div>
         <h2>
-            <a href="{{ path('episode', {'id': episode.id}) }}">
+            <a href="{{ path('episode', {'slug': episode.slug}) }}">
                 {{ episode.number }}
             </a> - {{ episode.title }}</h2>
     </div>
