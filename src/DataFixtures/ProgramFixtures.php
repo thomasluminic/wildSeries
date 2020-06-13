@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Program;
 use App\Service\SlugifyService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ProgramFixtures extends Fixture
+class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
     const PROGRAMS = [
         'Walking Dead' => [
@@ -43,12 +44,17 @@ class ProgramFixtures extends Fixture
             $program = new Program();
             $program->setTitle($title);
             $program->setSummary($data['summary']);
-            $program->setCategory($this->getReference($data['category']));
+            $program->setCategory($this->getReference('categorie_4'));
             $program->setSlug($slugify->generateSlugify($program->getTitle()));
             $manager->persist($program);
             $this->addReference('program_'. $i, $program);
             $i++;
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [CategoryFixtures::class];
     }
 }

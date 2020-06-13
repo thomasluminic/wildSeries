@@ -6,10 +6,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Season;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
-class SeasonFixtures extends Fixture
+class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -24,5 +25,10 @@ class SeasonFixtures extends Fixture
             $this->addReference('season_' . $i, $season);
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [ProgramFixtures::class];
     }
 }

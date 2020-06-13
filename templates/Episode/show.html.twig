@@ -1,6 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1><a href="{{ path('program', {programSlug: program.slug}) }}">{{ program.title }}</a> - <a href="{{ path('season', {seasonId: season.id}) }}">Season {{ season.number }}</a></h1>
-    <h2>{{ episode.number }} - {{ episode.title }}</h2>
-    <p>{{ episode.synopsis }}</p>
+    <div class="container">
+        <div class="row">
+            <h1>
+                <a class="text-primary" href="{{ path('program', {programSlug: program.slug}) }}">{{ program.title }}</a> -
+                <a class="text-primary" href="{{ path('season', {seasonId: season.id}) }}">Season {{ season.number }}</a>
+            </h1>
+        </div>
+        <div class="row">
+            <h2 class="text-secondary">{{ episode.number }} - {{ episode.title }}</h2>
+            <p class="text-secondary">{{ episode.synopsis }}</p>
+        </div>
+        <h2 class="text-primary">Les commentaires :</h2>
+            <div class="row">
+                {% for comment in episode.comments %}
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ comment.author.username }}
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ comment.comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% if app.user %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary btn-lg">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
 {% endblock %}
