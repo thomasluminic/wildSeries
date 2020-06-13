@@ -1,0 +1,20 @@
+{% extends 'Mailer/base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>Nouvelle série : <a href="localhost:8000/program/{{ program.slug }}">{{ program.title }}</a> - {{ program.category.name }}</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>{{ program.summary }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <ul>
+                {% for actor in program.actors %}
+                    <li>{{ actor.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
